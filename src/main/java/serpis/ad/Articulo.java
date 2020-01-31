@@ -6,16 +6,31 @@ import java.math.BigDecimal;
 public class Articulo {
 
     @Id
-    @GeneratedValue (strategy =GenerationType.IDENTITY)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
     private BigDecimal precio;
 
     @ManyToOne
     @JoinColumn(name="categoria")
-    private Categoria categoria;
+    private Categoria categoria;   
 
-    public Long getId() {
+    public Articulo(Long id, String nombre, BigDecimal precio, Categoria categoria) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.precio = precio;
+		this.categoria = categoria;
+	}   
+    
+	public Articulo(String nombre, BigDecimal precio, Categoria categoria) {
+		super();
+		this.nombre = nombre;
+		this.precio = precio;
+		this.categoria = categoria;
+	}
+
+	public Long getId() {
         return id;
     }
     public void setId (Long id) {

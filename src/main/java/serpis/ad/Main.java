@@ -19,8 +19,8 @@ public class Main {
         System.out.println("2-Modificar");
         System.out.println("3-Eliminar");
 
-        Scanner tcl2 = new Scanner(System.in);
-        int op2=tcl2.nextInt();
+        Scanner tcl = new Scanner(System.in);
+        int op2=tcl.nextInt();
 
         switch (op2) {
             case 1:
@@ -46,18 +46,34 @@ public class Main {
         entityManagerFactory.close();
     }
 
-    public static void nuevoPedido(EntityManager entityManager) {
-        Cliente cliente = entityManager.find(Cliente.class, 1L);
-        Pedido pedido = new Pedido(cliente);
-        PedidoLinea pedidoLinea1 = new PedidoLinea(pedido);
-        Articulo articulo1 = entityManager.find(Articulo.class, 1L);
-        pedidoLinea1.setArticulo(articulo1);
-        pedidoLinea1.setUnidades(new BigDecimal(4));
-        PedidoLinea pedidoLinea2 = new PedidoLinea(pedido);
-        Articulo articulo2 = entityManager.find(Articulo.class, 2L);
-        pedidoLinea2.setArticulo(articulo2);
-        pedidoLinea2.setUnidades(new BigDecimal(5));
-        entityManager.persist(pedido);
+    public static void nuevoPedido(EntityManager entityManager) { 
+    	System.out.println("¿Qué cliente desea hacer el pedido?");
+    	Cliente cliente = new Cliente(new Scanner(System.in).nextLine());
+    	Pedido pedido = new Pedido(cliente);
+    	System.out.println("¿Qué artículos forman parte del pedido?");
+    	Boolean stop = true;
+    	while (stop == true) {
+    		System.out.println("> Nombre: ");
+    		String nombre = new Scanner(System.in).nextLine();
+    		System.out.println("> Precio: ");
+    		BigDecimal precio = new Scanner(System.in).nextBigDecimal();
+    		System.out.println("> Categoría (ID): ");
+    		Long categoria = new Scanner(System.in).nextLong();
+    		new PedidoLinea(pedido).setArticulo(new Articulo(nombre, precio, entityManager.find(Categoria.class, categoria)));
+    		System.out.println("¿Desea añadir un artículo más? (Y/N)");
+    		switch (new Scanner(System.in).nextLine()) {
+			case "Y":
+				stop = true;
+				break;
+			case "N":
+				stop = false;
+				break;
+			default:
+				stop = false;
+				break;
+			}
+    	}
+    	entityManager.persist(pedido);
     }
 
     public static void modificarPedido(EntityManager entityManager) {    }

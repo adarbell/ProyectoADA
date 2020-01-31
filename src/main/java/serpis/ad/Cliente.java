@@ -7,9 +7,20 @@ public class Cliente {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nombre;
+    private String nombre; 
+    
+    public Cliente() {	}
+    
+    public Cliente(String nombre) {
+    	this.nombre = nombre;
+	}
+    
+    public Cliente(Long id, String nombre) {
+		this.id = id;
+		this.nombre = nombre;
+	}
 
-    public Long getId() {
+	public Long getId() {
         return id;
     }
 

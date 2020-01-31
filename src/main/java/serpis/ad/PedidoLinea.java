@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 public class PedidoLinea {
 
 	@Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
