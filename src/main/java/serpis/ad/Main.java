@@ -49,7 +49,9 @@ public class Main {
     public static void nuevoPedido(EntityManager entityManager) { 
     	System.out.println("¿Qué cliente desea hacer el pedido?");
     	Cliente cliente = new Cliente(new Scanner(System.in).nextLine());
+    	System.out.println(cliente.toString());
     	Pedido pedido = new Pedido(cliente);
+    	Articulo articulo = null;
     	System.out.println("¿Qué artículos forman parte del pedido?");
     	Boolean stop = true;
     	while (stop == true) {
@@ -59,20 +61,24 @@ public class Main {
     		BigDecimal precio = new Scanner(System.in).nextBigDecimal();
     		System.out.println("> Categoría (ID): ");
     		Long categoria = new Scanner(System.in).nextLong();
-    		new PedidoLinea(pedido).setArticulo(new Articulo(nombre, precio, entityManager.find(Categoria.class, categoria)));
+    		PedidoLinea pedidoLinea = new PedidoLinea(pedido);
+    		articulo = new Articulo(nombre, precio, entityManager.find(Categoria.class, categoria));
+    		pedidoLinea.setArticulo(articulo);
     		System.out.println("¿Desea añadir un artículo más? (Y/N)");
     		switch (new Scanner(System.in).nextLine()) {
-			case "Y":
-				stop = true;
-				break;
-			case "N":
-				stop = false;
-				break;
-			default:
-				stop = false;
-				break;
+				case "Y":
+					stop = true;
+					break;
+				case "N":
+					stop = false;
+					break;
+				default:
+					stop = false;
+					break;
 			}
     	}
+    	entityManager.persist(cliente);
+    	entityManager.persist(articulo);
     	entityManager.persist(pedido);
     }
 
