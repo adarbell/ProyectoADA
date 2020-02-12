@@ -14,6 +14,8 @@ public class Articulo {
     @ManyToOne
     @JoinColumn(name="categoria")
     private Categoria categoria;   
+    
+    private Articulo() {}
 
     public Articulo(Long id, String nombre, BigDecimal precio, Categoria categoria) {
 		super();
@@ -54,4 +56,11 @@ public class Articulo {
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
+
+	@Override
+	public String toString() {
+		return "Articulo [id=" + id + ", nombre=" + nombre + ", precio=" + precio + ", categoria=" + categoria + "]";
+	}
+    
+    
 }

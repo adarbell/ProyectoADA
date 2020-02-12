@@ -8,6 +8,8 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
+    
+    private Categoria() {}
 
     public Long getId() {
         return id;
@@ -22,4 +24,10 @@ public class Categoria {
     public void setNombre (String nombre) {
         this.nombre=nombre;
     }
+
+	@Override
+	public String toString() {
+		return "Categoria [id=" + id + ", nombre=" + nombre + "]";
+	}
+    
 }
